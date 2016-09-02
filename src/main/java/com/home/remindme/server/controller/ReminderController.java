@@ -2,41 +2,41 @@ package com.home.remindme.server.controller;
 
 
 import com.home.remindme.server.entity.Remind;
-import com.home.remindme.server.repository.RemindRepository;
+import com.home.remindme.server.service.ReminderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/remind")
+//@RequestMapping("/reminders")
 public class ReminderController {
 
-    final
-    RemindRepository remindRepository;
-
     @Autowired
-    public ReminderController(RemindRepository remindRepository) {
-        this.remindRepository = remindRepository;
-    }
+    ReminderService service;
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/reminders", method = RequestMethod.GET)
     @ResponseBody
-    public Remind getReminder() {
-        List<Remind> remindList = remindRepository.findAll();
-        return createMockRemind();
+    public List<Remind> getAllReminders() {
+        return service.getAll();
     }
 
-    private Remind createMockRemind() {
-        Remind r = new Remind();
-        r.setId(1);
-        r.setRemindDate(new Date());
-        r.setTitle("my First remind");
+    @RequestMapping(value = "/reminders/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Remind getReminder(@PathVariable("id") long remindId) {
+        return service.getById(remindId);
+    }
 
-        return r;
+    @RequestMapping(value = "/reminders", method = RequestMethod.POST)
+    @ResponseBody
+    // and update too
+    public Remind saveReminder(@RequestBody Remind remind) {
+        return service.save(remind);
+    }
+
+    @RequestMapping(value = "/reminders/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public void deleteReminderById(@PathVariable("id") long remindId) {
+        service.remove(remindId);
     }
 }
