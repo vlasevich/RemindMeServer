@@ -11,7 +11,10 @@
         <spring>4.2.3.RELEASE</spring>
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <spring-data-jpa.version>1.10.2.RELEASE</spring-data-jpa.version>
-        <hibernate-entitymanager.version>5.2.2.Final</hibernate-entitymanager.version>
+
+        <!--does not work with 5.2.2.FINAL-->
+        <hibernate-entitymanager.version>5.1.1.Final</hibernate-entitymanager.version>
+        <!---->
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
         <commons-dbcp2.version>2.1.1</commons-dbcp2.version>
         <jackson-databind.version>2.8.1</jackson-databind.version>
